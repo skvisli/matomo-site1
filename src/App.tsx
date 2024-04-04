@@ -26,18 +26,15 @@ function App() {
         "https://cdn.matomo.cloud/skvisli.matomo.cloud/container_hMpn3JxK.js";
       s.parentNode?.insertBefore(g, s);
     })();
+
+    console.log("pushing matomo");
   }, []);
 
   return (
     <div className="App">
       <button>Klikk meg!</button>
-      <a
-        className="App-link"
-        href="https://skatteetaten.no"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Gå til skatteetaten.no
+      <a href="https://matomo-site2-aa9e74583c58.herokuapp.com/">
+        Gå til matomo site2
       </a>
     </div>
   );

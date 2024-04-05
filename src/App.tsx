@@ -16,6 +16,12 @@ declare global {
 function App() {
   useEffect(() => {
     const _mtm = (window._mtm = window._mtm || []);
+
+    // Matomo tracker has already been set up
+    if (_mtm.length) return;
+
+    console.log("adding tracking");
+
     _mtm.push({ "mtm.startTime": new Date().getTime(), event: "mtm.Start" });
     (function () {
       var d = document,
@@ -27,7 +33,7 @@ function App() {
       s.parentNode?.insertBefore(g, s);
     })();
 
-    console.log("pushing matomo");
+    console.log(window._mtm);
   }, []);
 
   return (

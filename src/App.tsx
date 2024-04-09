@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 
 interface MtmItem {
@@ -6,16 +6,24 @@ interface MtmItem {
   event: string;
 }
 
+interface MatomoTracker {
+  push: (...args: any[]) => void;
+}
+
 // Initialize _mtm as a global variable with the correct type
 declare global {
   interface Window {
-    _mtm: MtmItem[];
+    _mtm?: MtmItem[];
+    _paq?: MatomoTracker[];
   }
 }
 
 function App() {
+  const [visitId, setVisitId] = useState("");
+
   useEffect(() => {
     const _mtm = (window._mtm = window._mtm || []);
+    const _paq = (window._paq = window._paq || []);
 
     // Matomo tracker has already been set up
     if (_mtm.length) return;
@@ -23,6 +31,7 @@ function App() {
     console.log("adding tracking");
 
     _mtm.push({ "mtm.startTime": new Date().getTime(), event: "mtm.Start" });
+
     (function () {
       var d = document,
         g = d.createElement("script"),
@@ -33,14 +42,24 @@ function App() {
       s.parentNode?.insertBefore(g, s);
     })();
 
-    console.log(window._mtm);
+    // get the current crossdomain id
+    _paq.push([
+      function (this: any) {
+        setVisitId(
+          this.getCrossDomainLinkingUrlParameter().replace("pk_vid=", "")
+        );
+      },
+    ]);
   }, []);
 
   return (
     <div className="App">
-      <button>Klikk meg!</button>
-      <a href="https://matomo-site2-aa9e74583c58.herokuapp.com/">
-        Gå til matomo site2
+      <h1>Min Side</h1>
+      <h2>Domenenavn: {window.location.origin}</h2>
+      <h2>Besøks ID: {visitId}</h2>
+      <button>Klikk for å trigge et event!</button>
+      <a href={"https://matomo-site2-aa9e74583c58.herokuapp.com/"}>
+        Gå til et annet domene for å gjøre en oppgave
       </a>
     </div>
   );

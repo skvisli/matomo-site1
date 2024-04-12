@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
+import { createRoot } from "react-dom/client";
 
 interface MtmItem {
   ["mtm.startTime"]: number;
@@ -52,12 +53,36 @@ function App() {
     ]);
   }, []);
 
+  // Add a shadow DOM
+  useEffect(() => {
+    const shadowHost = document.getElementById("shadow-host");
+
+    // check if a shadow DOM is already attached
+    if (shadowHost && !shadowHost?.shadowRoot) {
+      const shadowRoot = shadowHost.attachShadow({ mode: "open" });
+      const reactRoot = createRoot(shadowRoot);
+
+      const button = <button>Send event fra shadow DOM</button>;
+
+      reactRoot.render(button);
+    }
+  }, []);
+
   return (
     <div className="App">
       <h1>Min Side</h1>
-      <h2>Domenenavn: {window.location.origin}</h2>
-      <h2>Besøks ID: {visitId}</h2>
-      <button>Klikk for å trigge et event!</button>
+      <p>
+        <strong>Domenenavn: </strong>
+        {window.location.origin}
+      </p>
+      <p>
+        <strong>Besøks ID:</strong>
+        {visitId}
+      </p>
+      <div className="buttons">
+        <button>Klikk for å trigge et event!</button>
+        <div id="shadow-host"></div>
+      </div>
       <a href={"https://matomo-site2-aa9e74583c58.herokuapp.com/"}>
         Gå til et annet domene for å gjøre en oppgave
       </a>

@@ -1,12 +1,17 @@
 .App {
+  border: 4px lightsalmon solid;
+  border-radius: 4px;
   margin: auto;
-  padding-top: 3rem;
+  padding: 3rem;
+  margin-top: 3rem;
   width: 40rem;
 }
 
+.buttons {
+  margin: 5rem 0;
+}
+
 button {
-  display: block;
-  margin-top: 5rem;
   margin-bottom: 1rem;
 }
 

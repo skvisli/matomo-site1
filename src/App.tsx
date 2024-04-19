@@ -37,9 +37,18 @@ function App() {
       var d = document,
         g = d.createElement("script"),
         s = d.getElementsByTagName("script")[0];
+
+      // Container 1
       g.async = true;
       g.src =
         "https://cdn.matomo.cloud/skvisli.matomo.cloud/container_hMpn3JxK.js";
+      s.parentNode?.insertBefore(g, s);
+
+      // Container Felles Måling
+      g = d.createElement("script");
+      g.async = true;
+      g.src =
+        "https://cdn.matomo.cloud/skvisli.matomo.cloud/container_2d6EXwNl.js";
       s.parentNode?.insertBefore(g, s);
     })();
 
@@ -68,6 +77,17 @@ function App() {
     }
   }, []);
 
+  // function sendEventWithCode() {
+  //   if (window._paq) {
+  //     window._paq.push([
+  //       "trackEvent",
+  //       "userInteraction",
+  //       "buttonClick",
+  //       "sendEventWithCode",
+  //     ]);
+  //   }
+  // }
+
   return (
     <div className="App">
       <h1>Min Side</h1>
@@ -81,6 +101,8 @@ function App() {
       </p>
       <div className="buttons">
         <button>Klikk for å trigge et event!</button>
+        <button>Send event KUN til felles måling</button>
+        {/* <button onClick={sendEventWithCode}>Send event med kode</button> */}
         <div id="shadow-host"></div>
       </div>
       <a href={"https://matomo-site2-aa9e74583c58.herokuapp.com/"}>
